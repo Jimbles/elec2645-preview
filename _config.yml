@@ -1,0 +1,22 @@
+title: ELEC2645 Docs
+author: James Avery
+email: j.p.avery@leeds.ac.uk
+description: Reference documentation for the C code used in the ELEC2645 Embedded Systems Project Module.
+theme: just-the-docs
+
+url: https://eee-elec2645.github.io/
+
+favicon_ico: "/assets/images/favicon.ico"
+
+
+aux_links:
+  Minerva Homepage: https://minerva.leeds.ac.uk/ultra/courses/_575150_1/outline
+  GitHub Repository: https://github.com/EEE-ELEC2645
+
+color_scheme: dark
+enable_copy_code_button: true
+
+mermaid:
+  # Version of mermaid library
+  # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
+  version: "12.3.0"
