@@ -1,7 +1,7 @@
 ---
 title: Arrays
-parent: C Basics
-nav_order: 6
+parent: Arrays, Strings and Structs
+nav_order: 1
 layout: default
 ---
 

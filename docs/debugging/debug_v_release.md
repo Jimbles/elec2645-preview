@@ -1,5 +1,5 @@
 ---
-title: Debug vs Release
+title: Debug vs release
 parent: Debugging
 nav_order: 5
 layout: default

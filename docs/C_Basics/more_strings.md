@@ -1,7 +1,7 @@
 ---
-title: More Strings
-parent: C Basics
-nav_order: 8
+title: More strings
+parent: Arrays, Strings and Structs
+nav_order: 3
 layout: default
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: LCD
-nav_order: 11
+parent: Console Libraries
+nav_order: 1
 layout: default
 ---
 

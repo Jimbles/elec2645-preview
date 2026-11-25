@@ -1,6 +1,6 @@
 ---
 title: Building C Projects
-nav_order: 5
+nav_order: 7
 layout: default
 ---
 

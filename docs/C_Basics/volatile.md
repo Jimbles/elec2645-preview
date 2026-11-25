@@ -1,7 +1,7 @@
 ---
-title: Volatile & Static
+title: Volatile and static
 parent: C Basics
-nav_order: 13
+nav_order: 9
 layout: default
 ---
 

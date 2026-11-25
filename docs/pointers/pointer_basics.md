@@ -16,7 +16,7 @@ layout: default
 {:toc}
 </details>
 
-A pointer is a variable that stores a memory address, unlike a normal variable which store values. For example:
+A pointer is a variable that stores a memory address, unlike a normal variable, which stores a value. For example:
 
 ```c
 int pikachu_hp = 35;

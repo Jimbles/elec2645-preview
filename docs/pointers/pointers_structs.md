@@ -89,7 +89,7 @@ is equivalent to:
 (*pokemon).hp
 ```
 
-The `->` form is much easier to read, and its nearly always used.
+The `->` form is much easier to read, and it is nearly always used.
 
 So basically what we need to keep in mind is:
 

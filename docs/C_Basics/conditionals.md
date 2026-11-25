@@ -1,7 +1,7 @@
 ---
 title: Conditionals
 parent: C Basics
-nav_order: 3
+nav_order: 5
 layout: default
 ---
 
@@ -396,7 +396,7 @@ switch (choice) {
 
 ## Using `switch` with an `enum`
 
-A `switch` works particularly well with an `enum`. We will use this combination when [writing finite state machines]({% link docs/fsm/fsm_in_c.md %}).
+A `switch` works particularly well with an `enum` (see [Enums]({% link docs/C_Basics/enums.md %}) in the next section). We will use this combination when [writing finite state machines]({% link docs/fsm/fsm_in_c.md %}).
 
 ```c
 #include <stdio.h>

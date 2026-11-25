@@ -1,7 +1,7 @@
 ---
 title: Structs
-parent: C Basics
-nav_order: 10
+parent: Arrays, Strings and Structs
+nav_order: 5
 layout: default
 ---
 

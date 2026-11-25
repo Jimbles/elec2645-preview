@@ -1,5 +1,5 @@
 ---
-title: Floating-Point Tests
+title: Floating-point tests
 parent: Debugging
 nav_order: 4
 layout: default

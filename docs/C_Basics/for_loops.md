@@ -1,7 +1,7 @@
 ---
-title: For Loops
+title: For loops
 parent: C Basics
-nav_order: 5
+nav_order: 8
 layout: default
 ---
 
@@ -149,7 +149,7 @@ Here, `value += 2` increases `value` by two after each iteration.
 
 ## Processing an array
 
-`for` loops are commonly used to process arrays:
+`for` loops are commonly used to process arrays (covered fully in [Arrays]({% link docs/C_Basics/arrays.md %})):
 
 ```c
 #include <stdio.h>

@@ -291,3 +291,5 @@ A useful pattern to remember is:
 ```text
 open → check → use → close
 ```
+
+To keep a list of records, such as quiz scores or an inventory, from one run of a program to the next, see [Saving and loading records]({% link docs/files/file_records.md %}).

@@ -1,5 +1,5 @@
 ---
-title: Static Functions
+title: Static functions
 parent: Functions
 nav_order: 4
 layout: default

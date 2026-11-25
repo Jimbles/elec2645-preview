@@ -254,7 +254,31 @@ const struct timespec delay = { .tv_sec = 0, .tv_nsec = 100000000 };  // 0.1 s
 thrd_sleep(&delay, NULL);
 ```
 
-Not every compiler provides `threads.h` (Apple's compiler on macOS does not), so build these examples in the Codespace.
+Not every compiler provides `threads.h` (Apple's compiler on macOS does not). The Codespace has it. For other compilers, see the next section.
+
+### Waiting without `threads.h`
+
+Every C compiler has `clock()` in `time.h`, so a program can also wait by checking the clock over and over until enough time has passed:
+
+```c
+#include <time.h>
+
+// Waits by checking the clock until ms milliseconds have passed.
+void wait_ms(long ms)
+{
+    clock_t start = clock();
+
+    while ((clock() - start) * 1000 / CLOCKS_PER_SEC < ms) {
+        // keep checking
+    }
+}
+```
+
+`clock()` counts in steps of `1 / CLOCKS_PER_SEC` seconds, so multiplying by 1000 and dividing by `CLOCKS_PER_SEC` gives milliseconds. It measures the processor time your program has used, not the time on a wall clock, so on a busy computer the wait can come out a little long (in one test, the progress bar below took about 2.5 s instead of 2 s). To use it in the examples below, replace `#include <threads.h>` with `#include <time.h>`, add `wait_ms()`, and replace the `delay` variable and `thrd_sleep(&delay, NULL);` with the same wait in milliseconds, such as `wait_ms(100);` for 0.1 s.
+
+This is called a **busy wait**: the program keeps the processor busy for the whole wait, checking the time. `thrd_sleep()` lets the processor do other work instead, so use it where you can.
+
+You will meet the same idea in Unit 3. On the STM32, [`HAL_Delay()`]({% link docs/stm32/STM32_HAL.md %}#hal_delay) is a busy wait: it reads the millisecond counter `HAL_GetTick()` in a loop until enough time has passed. Your program does nothing else while it waits, which is why games on the board often use `HAL_GetTick()` to time each frame instead.
 
 ### A progress bar
 
@@ -296,12 +320,11 @@ When output goes to a terminal, C normally holds each line back until it reaches
 
 ### Redrawing the screen
 
-For frames taller than one line, clear the screen and move the cursor back to the top left before drawing each frame. Hiding the cursor stops it flickering:
+For frames taller than one line, draw the frame, then move the cursor back up to its first line and draw the next frame over the top. Hiding the cursor stops it flickering:
 
 | Code | Effect |
 | --- | --- |
-| `\x1b[2J` | clear the screen |
-| `\x1b[H` | move the cursor to the top left |
+| `\x1b[3A` | move the cursor up 3 lines (`\x1b[nA` moves it up `n` lines) |
 | `\x1b[?25l` | hide the cursor |
 | `\x1b[?25h` | show the cursor again |
 
@@ -309,8 +332,7 @@ For frames taller than one line, clear the screen and move the cursor back to th
 #include <stdio.h>
 #include <threads.h>
 
-#define CLEAR_SCREEN "\x1b[2J"
-#define CURSOR_HOME  "\x1b[H"
+#define CURSOR_UP_3  "\x1b[3A"
 #define HIDE_CURSOR  "\x1b[?25l"
 #define SHOW_CURSOR  "\x1b[?25h"
 #define TRACK_LENGTH 30
@@ -324,6 +346,9 @@ int main(void)
     printf(HIDE_CURSOR);
 
     for (int position = 0; position < TRACK_LENGTH; position++) {
+        if (position > 0) {
+            printf(CURSOR_UP_3);  // back to the top of the last frame
+        }
         draw_frame(position, position % 2);
         thrd_sleep(&delay, NULL);
     }
@@ -339,7 +364,6 @@ void draw_frame(int position, int frame)
     const char *heads[] = { "d[o_0]b", "q[0_o]p" };
     const char *legs[] = { "  / \\  ", "  | |  " };
 
-    printf(CLEAR_SCREEN CURSOR_HOME);
     printf("%*s%s\n", position, "", heads[frame]);
     printf("%*s%s\n", position, "", legs[frame]);
 
@@ -359,7 +383,11 @@ The bot walks from left to right along the track, switching between two poses on
 =====================================
 ```
 
+Each frame is three lines, so before drawing the next one the program moves the cursor up three lines. The first frame has nothing to draw over, so it skips that step. The new frame must cover every character of the old one: the spaces before the bot cover where it was, and the bot only moves right.
+
 `%*s` takes the width from the argument list, so `printf("%*s", position, "")` prints `position` spaces. `"  / \\  "` needs `\\` to print one backslash.
+
+You may find examples online that clear the whole screen with `\x1b[2J` before each frame. In the Codespace terminal that can leave the top line of the frame missing, so draw over the old frame instead.
 
 The loop in `main()` (draw, wait, repeat) is the same shape as a game loop. In Units 3 and 4 the same pattern draws frames on the LCD.
 
@@ -390,7 +418,7 @@ This produces something like:
 
 `%Y-%m-%d %H:%M:%S` is year, month, day, hours, minutes and seconds. The array needs 20 characters: 19 for the date and time plus one for the `'\0'`.
 
-The Codespace clock runs on UTC, so in summer the time is an hour behind UK time. To write the same line to a log file, use `fprintf()` with a file pointer instead of `printf()`; see [files]({% link docs/files/files.md %}).
+The Codespace clock runs on UTC, so in summer the time is an hour behind UK time. To write the same line to a log file, use `fprintf()` with a file pointer instead of `printf()`; see [Logs and imported data]({% link docs/files/file_logs.md %}).
 
 ## Common mistakes
 
@@ -437,4 +465,5 @@ The main points to remember are:
 - scale values before drawing bars or plots, multiplying before dividing
 - programs using `math.h` need `-lm`, and `M_PI` is not standard C
 - animate with a loop: draw a frame, `fflush(stdout)`, wait with `thrd_sleep()`, repeat
+- without `threads.h`, a busy wait with `clock()` works but keeps the processor busy
 - use `time()`, `localtime()` and `strftime()` to timestamp log lines

@@ -1,5 +1,5 @@
 ---
-title: Basic Data Types
+title: Basic data types
 parent: C Basics
 nav_order: 1
 layout: default

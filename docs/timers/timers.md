@@ -1,6 +1,7 @@
 ---
 title: Timers
-nav_order: 13
+parent: STM32
+nav_order: 3
 layout: default
 ---
 

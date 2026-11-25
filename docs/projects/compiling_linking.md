@@ -1,5 +1,5 @@
 ---
-title: Compiling & linking
+title: Compiling and linking
 parent: Building C Projects
 nav_order: 2
 layout: default

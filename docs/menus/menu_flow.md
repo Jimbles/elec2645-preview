@@ -234,7 +234,7 @@ In this program, the answer is: nowhere you can see. The program is "in the squa
 
 - to know where you are, you have to trace the chain of calls
 - going back to the right place gets harder, for example from a settings sub-menu to the settings menu rather than the main menu
-- handling errors is awkward: an invalid selection here simply exits, because there is no easy way to go back
+- handling errors is awkward: an invalid selection here exits, because there is no easy way to go back
 - every new mode means more functions calling more functions
 - the stack grows on every trip round the menu
 

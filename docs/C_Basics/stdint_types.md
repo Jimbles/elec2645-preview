@@ -1,5 +1,5 @@
 ---
-title: Fixed-Width Integer Types (stdint.h)
+title: Fixed-width integer types (stdint.h)
 parent: C Basics
 nav_order: 2
 layout: default
